@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barómetro Sanitario · Inferencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..900;1,7..72,300..900&family=Public+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: oklch(0.985 0.004 300); color: oklch(0.22 0.02 300); font-family: 'Public Sans', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  a { color: oklch(0.42 0.11 300); text-decoration: none; }
+  a:hover { color: oklch(0.32 0.11 300); text-decoration: underline; text-underline-offset: 3px; }
+  * { box-sizing: border-box; }
+  .btn { display: inline-flex; align-items: center; padding: 12px 20px; border-radius: 6px; font-weight: 600; font-size: 15px; }
+  .btn:hover { text-decoration: none; }
+  .btn-primary, .btn-primary:hover { color: white; }
+  .btn-primary { background: oklch(0.42 0.11 300); }
+  .btn-primary:hover { background: oklch(0.36 0.11 300); }
+  .btn-secondary, .btn-secondary:hover { color: oklch(0.32 0.05 300); }
+  .btn-secondary { border: 1px solid oklch(0.82 0.03 300); }
+  .btn-secondary:hover { background: oklch(0.95 0.015 300); }
+</style>
+</head>
+<body>
+<div data-screen-label="Web proyecto" style="min-height: 100vh; display: flex; flex-direction: column;">
+
+  <!-- NAV -->
+  <header style="position: sticky; top: 0; z-index: 10; background: oklch(0.985 0.004 300 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid oklch(0.9 0.01 300);">
+    <nav style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <a href="#inicio" style="font-family: Literata, Georgia, serif; font-weight: 600; font-size: 17px; color: oklch(0.22 0.02 300); letter-spacing: -0.01em;">Barómetro Sanitario · Inferencia</a>
+      <div style="display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; font-weight: 500;">
+        <a href="#proyecto" style="color: oklch(0.35 0.02 300);">Proyecto</a>
+        <a href="#equipo" style="color: oklch(0.35 0.02 300);">Equipo</a>
+        <a href="#articulos" style="color: oklch(0.35 0.02 300);">Artículos</a>
+        <a href="#congresos" style="color: oklch(0.35 0.02 300);">Congresos</a>
+        <a href="#software" style="color: oklch(0.35 0.02 300);">Software</a>
+        <a href="#financiacion" style="color: oklch(0.35 0.02 300);">Financiación</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- FRANJA FINANCIACIÓN (obligatoria en el primer pantallazo, guía de publicidad AEI) -->
+  <div style="background: white; border-bottom: 1px solid oklch(0.92 0.01 300);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap;">
+      <p style="margin: 0; font-size: 13px; line-height: 1.5; color: oklch(0.4 0.02 300); flex: 1 1 280px;">Proyecto <strong style="font-weight: 600; white-space: nowrap;">PID2024-157156OB-I00</strong> financiado por MICIU/AEI/10.13039/501100011033 y por FEDER, UE</p>
+      <a href="#financiacion" style="display: block; flex: 0 1 auto;"><img src="images/logo_AEI.svg" alt="Ministerio de Ciencia, Innovación y Universidades · Cofinanciado por la Unión Europea · Agencia Estatal de Investigación" width="3744" height="864" style="display: block; height: 56px; width: auto; max-width: 100%;"></a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section id="inicio" style="max-width: 1120px; width: 100%; margin: 0 auto; padding: 72px 24px 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; align-items: center;">
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">Proyecto de Generación de Conocimiento · Convocatoria 2024</div>
+      <h1 style="margin: 0; font-family: Literata, Georgia, serif; font-weight: 500; font-size: clamp(30px, 4vw, 48px); line-height: 1.12; letter-spacing: -0.015em; text-wrap: pretty;">Inferencia basada en encuestas poblacionales mediante integración de datos de fuentes probabilísticas, no probabilísticas y registros administrativos</h1>
+      <p style="margin: 0; font-size: 18px; line-height: 1.55; color: oklch(0.4 0.02 300); max-width: 560px; text-wrap: pretty;">Aplicación al Barómetro Sanitario. Nuevos métodos estadísticos para corregir el sesgo de selección y combinar fuentes de datos en las encuestas de salud.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="#proyecto" class="btn btn-primary">Conocer el proyecto</a>
+        <a href="#articulos" class="btn btn-secondary">Ver resultados</a>
+      </div>
+    </div>
+
+    <!-- Abstract graphic: population grid with sampled units -->
+    <div aria-hidden="true" style="position: relative; aspect-ratio: 1 / 1; max-width: 440px; width: 100%; margin: 0 auto; border-radius: 12px; background-color: oklch(0.955 0.012 300); background-image: radial-gradient(circle, oklch(0.78 0.04 300) 2.2px, transparent 2.6px); background-size: 28px 28px; background-position: 14px 14px; overflow: hidden;">
+      <div style="position: absolute; left: 18%; top: 14%; width: 40px; height: 40px; border-radius: 50%; background: oklch(0.42 0.11 300);"></div>
+      <div style="position: absolute; left: 62%; top: 22%; width: 28px; height: 28px; border-radius: 50%; background: oklch(0.42 0.11 300);"></div>
+      <div style="position: absolute; left: 40%; top: 46%; width: 56px; height: 56px; border-radius: 50%; background: oklch(0.42 0.11 300);"></div>
+      <div style="position: absolute; left: 12%; top: 66%; width: 32px; height: 32px; border-radius: 50%; background: oklch(0.42 0.11 300);"></div>
+      <div style="position: absolute; left: 74%; top: 60%; width: 44px; height: 44px; border-radius: 50%; background: oklch(0.42 0.11 300);"></div>
+      <div style="position: absolute; left: 56%; top: 80%; width: 24px; height: 24px; border-radius: 50%; background: oklch(0.42 0.11 300);"></div>
+      <div style="position: absolute; left: 28%; top: 30%; width: 22px; height: 22px; border-radius: 50%; border: 3px solid oklch(0.42 0.11 300); background: oklch(0.985 0.004 300);"></div>
+      <div style="position: absolute; left: 80%; top: 36%; width: 22px; height: 22px; border-radius: 50%; border: 3px solid oklch(0.42 0.11 300); background: oklch(0.985 0.004 300);"></div>
+      <div style="position: absolute; left: 30%; top: 84%; width: 22px; height: 22px; border-radius: 50%; border: 3px solid oklch(0.42 0.11 300); background: oklch(0.985 0.004 300);"></div>
+      <div style="position: absolute; left: 8%; top: 42%; width: 22px; height: 22px; border-radius: 50%; border: 3px solid oklch(0.42 0.11 300); background: oklch(0.985 0.004 300);"></div>
+      <div style="position: absolute; left: 8%; right: 8%; top: 50%; height: 1px; background: oklch(0.42 0.11 300 / 0.35);"></div>
+      <div style="position: absolute; top: 8%; bottom: 8%; left: 50%; width: 1px; background: oklch(0.42 0.11 300 / 0.35);"></div>
+    </div>
+  </section>
+
+  <!-- PROYECTO -->
+  <section id="proyecto" style="background: white; border-top: 1px solid oklch(0.92 0.01 300); border-bottom: 1px solid oklch(0.92 0.01 300);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 56px;">
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">01 · Descripción</div>
+        <h2 style="margin: 0; font-family: Literata, Georgia, serif; font-weight: 500; font-size: clamp(26px, 3vw, 34px); line-height: 1.2; letter-spacing: -0.01em; text-wrap: pretty;">Encuestas de salud más baratas, rápidas y fiables</h2>
+        <p style="margin: 0; font-size: 16px; line-height: 1.65; color: oklch(0.35 0.02 300); text-wrap: pretty;">Los organismos de vigilancia de la salud pública se apoyan en encuestas con diseño probabilístico para tomar decisiones. Sin embargo, la caída de las tasas de respuesta, el coste del trabajo de campo y la penetración de Internet han generalizado las muestras no probabilísticas: encuestas web, paneles voluntarios, registros administrativos y otras fuentes masivas.</p>
+        <p style="margin: 0; font-size: 16px; line-height: 1.65; color: oklch(0.35 0.02 300); text-wrap: pretty;">Estas fuentes no permiten aplicar la inferencia clásica y sufren sesgo de selección. El Barómetro Sanitario, que el Ministerio de Sanidad realiza con el CIS desde 1993, cambió en 2022 a entrevista telefónica con cuotas, lo que ha provocado problemas de representatividad e inconsistencias en sus series históricas.</p>
+        <p style="margin: 0; font-size: 16px; line-height: 1.65; color: oklch(0.35 0.02 300); text-wrap: pretty;">El objetivo general del proyecto es desarrollar una metodología estadística para la corrección, el ajuste y la evaluación de la eficiencia de las estimaciones en muestras no probabilísticas, orientada a las instituciones que producen encuestas de salud y, en particular, a la mejora de las estimaciones del Barómetro Sanitario.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; padding-top: 8px;">
+          <div style="border-top: 2px solid oklch(0.42 0.11 300); padding-top: 12px;"><div style="font-family: Literata, Georgia, serif; font-size: 28px; font-weight: 500;">3 años</div><div style="font-size: 13px; color: oklch(0.45 0.02 300);">Duración prevista</div></div>
+          <div style="border-top: 2px solid oklch(0.42 0.11 300); padding-top: 12px;"><div style="font-family: Literata, Georgia, serif; font-size: 28px; font-weight: 500;">7</div><div style="font-size: 13px; color: oklch(0.45 0.02 300);">Objetivos específicos</div></div>
+          <div style="border-top: 2px solid oklch(0.42 0.11 300); padding-top: 12px;"><div style="font-family: Literata, Georgia, serif; font-size: 28px; font-weight: 500;">Salud</div><div style="font-size: 13px; color: oklch(0.45 0.02 300);">Prioridad temática</div></div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">02 · Objetivos</div>
+        <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0;">
+          <li style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid oklch(0.92 0.01 300);"><span style="font-family: 'Public Sans', sans-serif; font-weight: 700; font-size: 13px; color: oklch(0.42 0.11 300); padding-top: 3px;">OE1</span><span style="font-size: 15px; line-height: 1.55; color: oklch(0.3 0.02 300);">Diseñar una medida de la calidad de la inferencia en encuestas no probabilísticas, incluida la cuantificación del sesgo de selección.</span></li>
+          <li style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid oklch(0.92 0.01 300);"><span style="font-weight: 700; font-size: 13px; color: oklch(0.42 0.11 300); padding-top: 3px;">OE2</span><span style="font-size: 15px; line-height: 1.55; color: oklch(0.3 0.02 300);">Estudiar métodos de ajuste bajo mecanismos de participación no ignorables (NMAR), donde la probabilidad de participar depende de la variable de interés.</span></li>
+          <li style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid oklch(0.92 0.01 300);"><span style="font-weight: 700; font-size: 13px; color: oklch(0.42 0.11 300); padding-top: 3px;">OE3</span><span style="font-size: 15px; line-height: 1.55; color: oklch(0.3 0.02 300);">Mejorar la metodología para el uso combinado de encuestas probabilísticas y no probabilísticas cuando ambas incluyen la variable de interés.</span></li>
+          <li style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid oklch(0.92 0.01 300);"><span style="font-weight: 700; font-size: 13px; color: oklch(0.42 0.11 300); padding-top: 3px;">OE4</span><span style="font-size: 15px; line-height: 1.55; color: oklch(0.3 0.02 300);">Desarrollar técnicas de análisis de datos difusos para la estimación en encuestas por muestreo: estimadores y medidas de variabilidad y precisión.</span></li>
+          <li style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid oklch(0.92 0.01 300);"><span style="font-weight: 700; font-size: 13px; color: oklch(0.42 0.11 300); padding-top: 3px;">OE5</span><span style="font-size: 15px; line-height: 1.55; color: oklch(0.3 0.02 300);">Evaluar y visualizar la representatividad del Barómetro Sanitario, sus sesgos potenciales y las estimaciones obtenidas con distintas técnicas de reponderación.</span></li>
+          <li style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid oklch(0.92 0.01 300);"><span style="font-weight: 700; font-size: 13px; color: oklch(0.42 0.11 300); padding-top: 3px;">OE6</span><span style="font-size: 15px; line-height: 1.55; color: oklch(0.3 0.02 300);">Desarrollar un caso de uso a partir del Barómetro Sanitario que muestre la implementación tecnológica de los métodos y su aplicabilidad a otras encuestas.</span></li>
+          <li style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid oklch(0.92 0.01 300); border-bottom: 1px solid oklch(0.92 0.01 300);"><span style="font-weight: 700; font-size: 13px; color: oklch(0.42 0.11 300); padding-top: 3px;">OE7</span><span style="font-size: 15px; line-height: 1.55; color: oklch(0.3 0.02 300);">Realizar una encuesta en paneles online probabilísticos y no probabilísticos para comparar sesgos y contrastar escalas Likert con números difusos.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" style="max-width: 1120px; width: 100%; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 40px;">
+    <div style="display: flex; flex-direction: column; gap: 14px; max-width: 640px;">
+      <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">03 · Equipo</div>
+      <h2 style="margin: 0; font-family: Literata, Georgia, serif; font-weight: 500; font-size: clamp(26px, 3vw, 34px); line-height: 1.2; letter-spacing: -0.01em;">Un equipo multidisciplinar</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: oklch(0.4 0.02 300); text-wrap: pretty;">Matemáticos, estadísticos, sociólogos y especialistas en salud pública de universidades, institutos de estadística y el Ministerio de Sanidad.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <h3 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.45 0.02 300);">Investigadores principales</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+        <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 22px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+          <img src="images/mmar.jpg" alt="María del Mar Rueda García" width="112" height="112" style="width: 112px; height: 112px; flex: 0 0 auto; border-radius: 50%; object-fit: cover; object-position: center 20%; border: 1px solid oklch(0.9 0.01 300);">
+          <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 160px;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500;">María del Mar Rueda García</div>
+            <div style="font-size: 14px; color: oklch(0.42 0.11 300); font-weight: 600;">Investigadora principal (IP1)</div>
+            <div style="font-size: 14px; color: oklch(0.45 0.02 300);">Universidad de Granada</div>
+          </div>
+        </div>
+        <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 22px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+          <img src="images/rferri.jpg" alt="Ramón Ferri García" width="112" height="112" style="width: 112px; height: 112px; flex: 0 0 auto; border-radius: 50%; object-fit: cover; object-position: center 20%; border: 1px solid oklch(0.9 0.01 300);">
+          <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 160px;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500;">Ramón Ferri García</div>
+            <div style="font-size: 14px; color: oklch(0.42 0.11 300); font-weight: 600;">Investigador principal (IP2)</div>
+            <div style="font-size: 14px; color: oklch(0.45 0.02 300);">Universidad de Granada</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <h3 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.45 0.02 300);">Equipo de investigación</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+        <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Beatriz Cobo</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Estadística</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Universidad de Granada</div>
+        </div>
+        <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Antonio F. Roldán López de Hierro</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Estadístico · Números difusos</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Universidad de Granada</div>
+        </div>
+        <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Concepción B. Roldán López de Hierro</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Estadística · Números difusos</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Universidad de Granada</div>
+        </div>
+        <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Sara Pasadas del Amo</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Socióloga · Metodología de encuestas</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Universidad de Córdoba</div>
+        </div>
+        <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Montse Neira León</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Jefa de Área, Subdirección de Información Sanitaria</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Ministerio de Sanidad</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <h3 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.45 0.02 300);">Equipo de trabajo</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Ana Clara Zoni</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Salud pública · Estadísticas de mortalidad y encuestas</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Ministerio de Sanidad</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">María García</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Documentalista</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Ministerio de Sanidad</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Andrés Cabrera León</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Asesor científico</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Ministerio de Sanidad</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Carmen Sánchez Cantalejo</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Encuestas de salud (ESA, ESSA)</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Escuela Andaluza de Salud Pública</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Marina Rivas</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Técnica estadística</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">IECA</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Manuel Trujillo</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Coordinador de la Unidad de Estadística</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">IESA-CSIC</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Pier Francesco Perri</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Inferencia en poblaciones finitas</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Università della Calabria</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Maria Giovanna Ranalli</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Inferencia en poblaciones finitas</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Università degli Studi di Perugia</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">Jorge Rueda</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Estudiante de doctorado</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Universidad de Granada</div>
+        </div>
+        <div style="border: 1px solid oklch(0.9 0.01 300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-size: 16px; font-weight: 600;">José Juan García</div>
+          <div style="font-size: 13.5px; color: oklch(0.42 0.11 300);">Estudiante de doctorado</div>
+          <div style="font-size: 13.5px; color: oklch(0.45 0.02 300);">Universidad de Granada</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTÍCULOS -->
+  <section id="articulos" style="background: white; border-top: 1px solid oklch(0.92 0.01 300); border-bottom: 1px solid oklch(0.92 0.01 300);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 36px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 14px; max-width: 640px;">
+          <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">04 · Artículos publicados</div>
+          <h2 style="margin: 0; font-family: Literata, Georgia, serif; font-weight: 500; font-size: clamp(26px, 3vw, 34px); line-height: 1.2; letter-spacing: -0.01em;">Publicaciones del proyecto</h2>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: oklch(0.4 0.02 300); text-wrap: pretty;">Todos los artículos se difunden en acceso abierto a través del repositorio institucional Digibug de la Universidad de Granada.</p>
+        </div>
+        <a href="https://digibug.ugr.es" style="font-size: 14px; font-weight: 600;">Repositorio Digibug →</a>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0;">
+        <article style="display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 20px; padding: 24px 0; border-top: 1px dashed oklch(0.82 0.02 300); align-items: start;">
+          <div style="font-family: Literata, Georgia, serif; font-size: 15px; color: oklch(0.55 0.02 300); padding-top: 3px;">2026</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1.3; text-wrap: pretty;">Enhancing accuracy in surveys obtained by respondent-driven sampling with bias adjustment techniques</div>
+            <div style="font-size: 14px; color: oklch(0.4 0.02 300);">Sánchez-Borrego, I., Rueda-Sánchez, J. L., Rueda, M. M.</div>
+            <div style="font-size: 13px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: oklch(0.5 0.02 300);">AStA Advances in Statistical Analysis, 110(3), 519–549</div>
+          </div>
+          <a href="https://doi.org/10.1007/s10182-025-00548-z" style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 4px 8px; border: 1px solid oklch(0.85 0.03 300); border-radius: 4px; white-space: nowrap;">10.1007/s10182-025-00548-z</a>
+        </article>
+        <article style="display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 20px; padding: 24px 0; border-top: 1px dashed oklch(0.82 0.02 300); align-items: start;">
+          <div style="font-family: Literata, Georgia, serif; font-size: 15px; color: oklch(0.55 0.02 300); padding-top: 3px;">2026</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1.3; text-wrap: pretty;">Comparison of approaches to variance estimation in non-probability samples</div>
+            <div style="font-size: 14px; color: oklch(0.4 0.02 300);">Rueda-Sánchez, J. L., Cobo, B., Ferri-García, R., Rueda, M. M.</div>
+            <div style="font-size: 13px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: oklch(0.5 0.02 300);">Mathematics and Computers in Simulation, 250, 724–747</div>
+          </div>
+          <a href="https://doi.org/10.1016/j.matcom.2026.07.021" style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 4px 8px; border: 1px solid oklch(0.85 0.03 300); border-radius: 4px; white-space: nowrap;">10.1016/j.matcom.2026.07.021</a>
+        </article>
+        <article style="display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 20px; padding: 24px 0; border-top: 1px dashed oklch(0.82 0.02 300); align-items: start;">
+          <div style="font-family: Literata, Georgia, serif; font-size: 15px; color: oklch(0.55 0.02 300); padding-top: 3px;">2026</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1.3; text-wrap: pretty;">Evaluation of available techniques and their combinations to address selection bias in nonprobability surveys</div>
+            <div style="font-size: 14px; color: oklch(0.4 0.02 300);">Rueda-Sánchez, J. L., Ferri-García, R., Rueda, M. M., Cobo, B.</div>
+            <div style="font-size: 13px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: oklch(0.5 0.02 300);">AStA Advances in Statistical Analysis, 110(2), 407–457</div>
+          </div>
+          <a href="https://doi.org/10.1007/s10182-025-00530-9" style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 4px 8px; border: 1px solid oklch(0.85 0.03 300); border-radius: 4px; white-space: nowrap;">10.1007/s10182-025-00530-9</a>
+        </article>
+        <article style="display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 20px; padding: 24px 0; border-top: 1px dashed oklch(0.82 0.02 300); align-items: start;">
+          <div style="font-family: Literata, Georgia, serif; font-size: 15px; color: oklch(0.55 0.02 300); padding-top: 3px;">2025</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1.3; text-wrap: pretty;">Estimation of the distribution function and quantiles through data integration</div>
+            <div style="font-size: 14px; color: oklch(0.4 0.02 300);">Cobo, B., Martínez, S., Rueda, M. M.</div>
+            <div style="font-size: 13px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: oklch(0.5 0.02 300);">Statistical Papers, 66(5), 111</div>
+          </div>
+          <a href="https://doi.org/10.1007/s00362-025-01727-5" style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 4px 8px; border: 1px solid oklch(0.85 0.03 300); border-radius: 4px; white-space: nowrap;">10.1007/s00362-025-01727-5</a>
+        </article>
+        <article style="display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 20px; padding: 24px 0; border-top: 1px dashed oklch(0.82 0.02 300); align-items: start;">
+          <div style="font-family: Literata, Georgia, serif; font-size: 15px; color: oklch(0.55 0.02 300); padding-top: 3px;">2025</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1.3; text-wrap: pretty;">A new technique for handling non-probability samples based on model-assisted kernel weighting</div>
+            <div style="font-size: 14px; color: oklch(0.4 0.02 300);">Cobo, B., Rueda-Sánchez, J. L., Ferri-García, R., Rueda, M. M.</div>
+            <div style="font-size: 13px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: oklch(0.5 0.02 300);">Mathematics and Computers in Simulation, 227, 272–281</div>
+          </div>
+          <a href="https://doi.org/10.1016/j.matcom.2024.08.009" style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 4px 8px; border: 1px solid oklch(0.85 0.03 300); border-radius: 4px; white-space: nowrap;">10.1016/j.matcom.2024.08.009</a>
+        </article>
+        <div style="border-top: 1px dashed oklch(0.82 0.02 300);"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONGRESOS -->
+  <section id="congresos" style="max-width: 1120px; width: 100%; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 36px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 14px; max-width: 640px;">
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">05 · Comunicaciones a congresos</div>
+        <h2 style="margin: 0; font-family: Literata, Georgia, serif; font-weight: 500; font-size: clamp(26px, 3vw, 34px); line-height: 1.2; letter-spacing: -0.01em;">Difusión en reuniones científicas</h2>
+        <p style="margin: 0; font-size: 16px; line-height: 1.6; color: oklch(0.4 0.02 300); text-wrap: pretty;">Presentaciones orales y pósteres del equipo en congresos nacionales e internacionales de estadística y metodología de encuestas.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 0;">
+      <article style="display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 20px; padding: 24px 0; border-top: 1px dashed oklch(0.82 0.02 300); align-items: start;">
+        <div style="font-family: Literata, Georgia, serif; font-size: 15px; color: oklch(0.55 0.02 300); padding-top: 3px;">2026</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1.3; text-wrap: pretty;">Reponderación del Barómetro Sanitario: propensión, calibración y aprendizaje automático frente a la serie histórica</div>
+          <div style="font-size: 14px; color: oklch(0.4 0.02 300);">Rueda, M. M., Ferri-García, R., Rueda-Sánchez, J. L.</div>
+          <div style="font-size: 13px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: oklch(0.5 0.02 300);">XXXIX Congreso Nacional de Estadística e Investigación Operativa (SEIO) · Granada, junio 2026</div>
+        </div>
+        <span style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 4px 8px; border: 1px solid oklch(0.85 0.03 300); border-radius: 4px; white-space: nowrap; color: oklch(0.45 0.02 300);">Comunicación oral</span>
+      </article>
+      <article style="display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 20px; padding: 24px 0; border-top: 1px dashed oklch(0.82 0.02 300); align-items: start;">
+        <div style="font-family: Literata, Georgia, serif; font-size: 15px; color: oklch(0.55 0.02 300); padding-top: 3px;">2026</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1.3; text-wrap: pretty;">Fuzzy Likert scales in online health panels: probability vs. nonprobability designs</div>
+          <div style="font-size: 14px; color: oklch(0.4 0.02 300);">Roldán López de Hierro, A. F., Roldán López de Hierro, C. B., Cobo, B., Pasadas del Amo, S.</div>
+          <div style="font-size: 13px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: oklch(0.5 0.02 300);">ITACOSM 2026 · Italian Conference on Survey Methodology · Perugia, junio 2026</div>
+        </div>
+        <span style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 4px 8px; border: 1px solid oklch(0.85 0.03 300); border-radius: 4px; white-space: nowrap; color: oklch(0.45 0.02 300);">Póster</span>
+      </article>
+      <div style="border-top: 1px dashed oklch(0.82 0.02 300);"></div>
+    </div>
+  </section>
+
+  <!-- SOFTWARE -->
+  <section id="software" style="background: white; border-top: 1px solid oklch(0.92 0.01 300); border-bottom: 1px solid oklch(0.92 0.01 300);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 36px;">
+    <div style="display: flex; flex-direction: column; gap: 14px; max-width: 640px;">
+      <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">06 · Software desarrollado</div>
+      <h2 style="margin: 0; font-family: Literata, Georgia, serif; font-weight: 500; font-size: clamp(26px, 3vw, 34px); line-height: 1.2; letter-spacing: -0.01em;">Herramientas abiertas para la comunidad</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: oklch(0.4 0.02 300); text-wrap: pretty;">Los métodos desarrollados se implementan en software libre para que cualquier equipo pueda aplicarlos a sus propias encuestas.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+      <div style="background: oklch(0.22 0.02 300); color: oklch(0.95 0.005 300); border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: oklch(0.78 0.06 300);">Paquete R</span>
+          <span style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 3px 8px; border-radius: 4px; background: oklch(0.32 0.03 300);">v0.1.0 · ejemplo</span>
+        </div>
+        <div style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 26px; font-weight: 500;">nonprobint</div>
+        <p style="margin: 0; font-size: 15px; line-height: 1.6; color: oklch(0.82 0.01 300); text-wrap: pretty;">Integración de muestras probabilísticas y no probabilísticas: estimadores por propensión, calibración múltiple, medidas de sesgo (MUBP, SMUB) y modelos de aprendizaje automático para la corrección del sesgo de selección.</p>
+        <pre style="margin: 0; padding: 14px 16px; background: oklch(0.17 0.02 300); border-radius: 8px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; line-height: 1.6; color: oklch(0.88 0.01 300); overflow-x: auto;">install.packages("nonprobint")
+library(nonprobint)</pre>
+        <div style="display: flex; gap: 16px; font-size: 14px; font-weight: 600; margin-top: auto;">
+          <a href="#" style="color: oklch(0.85 0.06 300);">CRAN</a>
+          <a href="#" style="color: oklch(0.85 0.06 300);">Documentación</a>
+        </div>
+      </div>
+
+      <div style="background: white; border: 1px solid oklch(0.9 0.01 300); border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: oklch(0.42 0.11 300);">Repositorio GitHub</span>
+          <span style="font-size: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; padding: 3px 8px; border-radius: 4px; background: oklch(0.95 0.01 300); color: oklch(0.45 0.02 300);">ejemplo</span>
+        </div>
+        <div style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 22px; font-weight: 500; word-break: break-all;">github.com/pnpar-hb</div>
+        <p style="margin: 0; font-size: 15px; line-height: 1.6; color: oklch(0.38 0.02 300); text-wrap: pretty;">Código, conjuntos de datos, scripts de simulación y materiales de talleres y seminarios. Cada elemento incluye una descripción detallada para su reutilización por otros equipos.</p>
+        <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: oklch(0.35 0.02 300);">
+          <li style="display: flex; gap: 10px;"><span style="color: oklch(0.42 0.11 300);">—</span>Scripts de reponderación del Barómetro Sanitario</li>
+          <li style="display: flex; gap: 10px;"><span style="color: oklch(0.42 0.11 300);">—</span>Datos simulados y resultados reproducibles</li>
+          <li style="display: flex; gap: 10px;"><span style="color: oklch(0.42 0.11 300);">—</span>Materiales de talleres y seminarios</li>
+        </ul>
+        <div style="display: flex; gap: 16px; font-size: 14px; font-weight: 600; margin-top: auto;">
+          <a href="#">Ver repositorio</a>
+          <a href="#">Descargas</a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- FINANCIACIÓN -->
+  <section id="financiacion">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 64px 24px; display: flex; flex-direction: column; gap: 28px;">
+      <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.42 0.11 300);">07 · Financiación</div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; color: oklch(0.4 0.02 300); max-width: 720px; text-wrap: pretty;">Proyecto <strong style="font-weight: 600; white-space: nowrap;">PID2024-157156OB-I00</strong> financiado por MICIU/AEI/10.13039/501100011033 y por FEDER, UE. Convocatoria 2024 de «Proyectos de Generación de Conocimiento».</p>
+      <div style="display: flex; align-items: center; gap: 28px 48px; flex-wrap: wrap;">
+        <img src="images/logo_AEI.svg" alt="Ministerio de Ciencia, Innovación y Universidades · Cofinanciado por la Unión Europea · Agencia Estatal de Investigación" width="3744" height="864" style="display: block; height: 84px; width: auto; max-width: 100%;">
+        <img src="images/logo_UGR.svg" alt="Universidad de Granada" width="838" height="257" style="display: block; height: 68px; width: auto; max-width: 100%;">
+      </div>
+    </div>
+  </section>
+
+  <footer style="background: oklch(0.22 0.02 300); color: oklch(0.8 0.01 300);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 32px 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px;">
+      <div>Departamento de Estadística e Investigación Operativa · Universidad de Granada</div>
+      <div style="display: flex; gap: 18px;">
+        <a href="#" style="color: oklch(0.85 0.04 300);">Contacto</a>
+        <a href="#" style="color: oklch(0.85 0.04 300);">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
